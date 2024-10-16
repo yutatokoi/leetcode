@@ -1,3 +1,4 @@
+// # attempt1 (iterative solution)
 /**
  * Definition for a binary tree node.
  * type TreeNode struct {
@@ -31,4 +32,36 @@ func sumOfLeftLeaves(root *TreeNode) int {
     }
 
     return total
+}
+
+// #attempt2 (dfs solution)
+/**
+ * Definition for a binary tree node.
+ * type TreeNode struct {
+ *     Val int
+ *     Left *TreeNode
+ *     Right *TreeNode
+ * }
+ */
+func sumOfLeftLeaves(root *TreeNode) int {
+    sum := 0
+    var dfs func(node *TreeNode)
+    dfs = func(node *TreeNode) {
+        if node == nil {
+            return
+        }
+
+        if node.Left != nil && isLeaf(node.Left) {
+            sum += node.Left.Val
+        }
+        dfs(node.Left)
+        dfs(node.Right)
+    }
+
+    dfs(root)
+    return sum
+}
+
+func isLeaf(node *TreeNode) bool {
+    return node != nil && node.Left == nil && node.Right == nil
 }
