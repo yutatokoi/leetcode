@@ -1,3 +1,4 @@
+// attempt1 Naive solution
 class Solution:
     def checkPerfectNumber(self, num: int) -> bool:
         if num % 2 == 1:
@@ -10,3 +11,20 @@ class Solution:
                 divisors.append(divisor)
 
         return sum(divisors) == num
+
+// attempt2 Optimal solution
+import math
+
+class Solution:
+    def checkPerfectNumber(self, num: int) -> bool:
+        if num % 2 == 1:
+            return False
+
+        total = 0
+        n = math.ceil(math.sqrt(num))
+        for divisor in range(1, n):
+            if num % divisor == 0:
+                total += divisor
+                total += num // divisor
+
+        return total // 2 == num
